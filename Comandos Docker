@@ -1,0 +1,70 @@
+SERVICIO DOCKER
+
+systemctl status/stop/start docker #muestra el estado/para docker/inicia docker
+systemctl enable/disable docker #activa el inicio/desactiva el inicio de docker
+
+COMANDOS DOCKER
+
+docker info #info sobre toda la configuracion de docker.
+docker ps #muestra los contenedores activos
+docker ps -a #muestra los contenedores activos y no activos.
+docker images #muestra las imagenes descargadas en el repo local
+docker --version #version de docker
+docker ps -l #muestra el último contenedor iniciado/modificado
+docker ps -a -s #muestra el tamaño de todos lo contenedores
+docker run -it <nombre de imagen> bash #crea un contenedor y luego ingresa al prompt.
+docker run -it --rm <nombre de imagen> bash #crea un contenedor con acceso interactivo y ademas con --rm indicamos que se borre una vez parado y luego se indica acceso a bash.
+docker start -i <ID de contenedor> #inicio nuevamente el contenedor en modo interactivo.
+docker stop <ID/nombre del contenedor> #para el contenedor (queda inactivo, no se borra)
+docker run -d <nombre de imagen> #crea contenedor en modo background
+docker pull <Nombre de repositorio:nombre de imagen> #descarga imagen del repo y nombre que le indicamos.
+docker rm <ID/nombre del contenedor> #borra el contenedor 
+docker rmi <ID/nombre de la imagen> #borra la imagen
+docker rm `docker ps -qa` #WARNING! comando q borra todos los contenedores.
+docker run -it --name ubuntu_hugo ubuntu bash #creo un contenedor con la imagen ubuntu y la nombro ubuntu_hugo
+docker exec ubuntu_hugo echo hola #lanzo el comando echo al contenedor ubuntu_hugo
+docker exec -it <ID/Nombre contenendor> bash #ingreso al bash del contenedor
+docker image ... #comandos relacionados con imagenes
+docker container ... #comandos relacionados con contenedores
+docker logs <ID/nombre del contenedor> <--tail 5/-f> #muestra todo lo que imprime por pantalla el contenedor, con tail puede mostrar los ultimas 5 lineas o con f muestra dinamicamente.
+docker kill <ID> #mata el contenedor
+docker top <ID/Nombre del contenedor> #muestra los procesos del contenedor.
+docker stats <ID/Nombre del contenedor> #muestra los recursos del contenedor.
+docker inspect <ID del contenedor/imagen> contenedor.txt #Nos brinda info de las propiedades del contenedor/imagen en formato JSON redireccionando el resultado a contenedor.txt.
+
+NETWORK
+docker run -d -P nginx #ejecuta un contenedor nginx en modo background y expone todos sus puertos como públicos.
+docker run -d -p 8080:80 nginx #en este caso se ejecuta el contenedor nginx exponiendo su puerto 80 accesible por el puerto 8080 desde el host.
+docker network ls #muestra los tipos de red. Por defecto los contenedor usar la red tipo bridge.
+docker port <ID/Nombre del contenedor> #muestra el puerto origen y el puerto donde se expone en el host.
+docker network create red1 #creo una red llamada red1 que usa el drive bridge por defecto.Se recomienda crear manualmente la red para que los distintos contenedores q la usen tengan todos sus puertos abiertos y se puedan ver sin problema.
+docker run -it --name contenedor1 --network red1 <nombre de la imagen> #creamos un contenedor llamado contenedor1 que es un ubuntu y usa la red llamada red1.
+docker network <connect/disconnect> red2 <ID/Nombre del contenedor> #indica al contenedor que agregue la red red2.Puede trabajar en la red que tiene por defecto y ademas con la red2.
+docker network rm <nombre de la red> #borra la red. No debe haber contenedores asociados a la red.
+
+VOLUMENES
+/var/lib/docker/volumes es un directorio donde se encuentran los volumenes.
+docker run -it -v /datos --name ubuntu1 ubuntu bash #creo un contenedor llamado ubuntu1 con un volumen en el directorio /datos.
+docker volume <ls/create/inspect/rm/prune> #comando para la gestión de volumenes.
+docker volume prune #WARNING! comando q borra todos los volumenes.
+docker run -it -v <directorio del host:directorio del contenedor> --name ubuntu1 ubuntu #creo un contenedor llamado ubuntu1 que comparte un volumen con el host.
+docker run -it --name ubuntu1 --volumes-from <nombre del contenedor que queremos q comparta el volumen> ubuntu bash #se crea un contenenador llamada ubuntu1 que comparte el volumen con otro conentendor.
+docker volume create <nombre del volumen> #creamos un volumen
+docker volume inspect <nombre del volumen> #muestran info del volumen
+docker run -it --name ubuntu1 -v vol1:/dir1 ubuntu bash #crea un contenedor llamado ubuntu1 y le indicamos el volumen que va a utilizar (vol1) q apunta al directorio dir1 del contenedor.
+docker run -it --name ubuntu1 -v vol1:/dir2:ro ubuntu bash #idem anterior solo que apunta a dir2 y le indicamos los permisos ro-->solo lectura.
+docker volume rm <ID del volumen> #borra el volumen
+docker volume prune #elimina los volumenes que no sean utilizados por al menos un contenedor.
+
+GESTION DE IMAGENES
+docker diff ubuntu1 #lista los cambios del contenedor ubuntu1. A=Añadido, C=Modificado, D=Borrado.
+docker commit <contenedor origen> <nombre de la nueva imagen> #creo una imagen en base a un contenedor.
+docker build -t my_imagen . #crear una imagen llamada my_imagen a partir de un Dockerfile que se encuentra en el directorio donde estamos(.)
+docker build -t imagen:v1 . #a partir de un dockerfile en la carpeta donde me encuentro creo una imagen llamada (-t) imagen y tiene el tag v1 (generalmente el tag indica la version).
+docker image history <nombre de la imagen> #nos muestra los cambios que sufrio la imagen.
+
+DOCKER HUB
+docker login #solicitara usuario y clave del hub.docker.com para luego poder subir las imagenes propias.
+docker image tag image:v5 <UsuarioDockerHub/NombreImagen:tag> #editamos el nombre de nuestar imagen para poder subirla a docker hub.
+docker push <UsuarioDockerHub/NombreImagen:tag> #subimos la imagen con el formato valido.
+docker pull <UsuarioDockerHub/NombreImagen:tag> #descargamos la imagen con el formato valido.
