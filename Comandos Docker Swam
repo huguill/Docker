@@ -1,0 +1,18 @@
+DOCKER SWARM
+
+docker swarm init #crea un nodo manager. Debe tener una sola IP estática. Muy probablemente tengamos q agregar la clausula --advertise-addr <IP> indicando la IP estatica.
+docker swarm join-token worker #indica como es el comando para unir un nodo worker al manager.
+docker swarm join --token <token> #comando para unir el nodo worker al manager.
+docker node ls #podemos ver los nodos que tenemos.
+docker node inspect <nodo> #informacion del nodo en formato JSON.
+docker node inspect --pretty <nodo> #informacion del nodo en formato más legible.
+docker node promote <nodoX> #promovemos el nodoX a manager. Pasa a ser manager en caso q el actual manager se caiga.
+docker node demote <nodoX> #degradamos el nodoX como manager.
+docker swarm leave #en el nodo en que estemos parados este comando proboca que dicho nodo abandona el cluster.
+docker node rm <nodeX> #eliminamos definitivamente el nodoX del cluster.
+docker service create --replicas 1 --name <nombre del servicio> alpine ping docker.com #creamos un servicio con una sola replica la imagen es alpine y realiza un ping a docker.com.
+docker service ls #muestra los servicios (se ejecuta desde el nodo manager).
+docker service ps <nombre del servicio> #muestra los procesos del servicio solicitado.
+docker service inspect --pretty <nombre del servicio> #veo info detallada del servicio.
+docker service scale servicio1=2 #Permite escalar servicios, en este caso el servicio1 se replica 2 veces.
+docker service rm <nombre de servicio> #borra el servicio.
