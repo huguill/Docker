@@ -1,0 +1,12 @@
+DOCKER COMPOSE
+
+docker-compose ps #muestra los contenedores activos (creados por docker-compose). Con la opción -a muestra todos los contenedores (activos y detenidos).
+docker-compose up -d #Creamos el/los servicios que contiene el docker-compose.yml corriendo en backgound (-d).
+docker-compose stop #para todos los contenedores del docker compose.
+docker-compose config #debemos estar parados en el directorio donde esta el docker-compose.yml y verifica si es correcta la sintaxis.
+docker-compose start #arranca los contenedores (del docker-compose.yml donde estemos parados).
+docker-compose logs <nombre del servicio> #logs del servicio.
+docker-compose top <nombre del servicio> #procesos mas pesados del servicio.
+docker-compose pause #pausa los contenedores. Con <unpause> sigue funcionando. 
+docker-compose rm #elimina los servicios.
+docker-compose down #borra los contenedores, los volumenes y la red.e
