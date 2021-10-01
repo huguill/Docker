@@ -1,0 +1,11 @@
+1- Descargamos la última vesión estable de docker-compose
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+2- Le damos permisos de ejecución al binario que descargamos
+  sudo chmod +x /usr/local/bin/docker-compose
+  
+3- Si probamos ejecutar el comando "docker-compose" y falla deberemos crear un enlace simbolico
+  sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+4- Probamos si realizamos una correcta instalación
+  docker-compose --version
