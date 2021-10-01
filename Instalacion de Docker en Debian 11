@@ -1,0 +1,32 @@
+1- En caso de tener instalada alguna version anterior de Docker debemos desinstalarla
+  sudo apt-get remove docker docker-engine docker.io containerd runc
+
+2- Actualizamos el repositorio local
+  sudo apt-get update
+
+3- Instalamos los paquetes necesarios
+  sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+ 
+ 4- Agregamos la clave oficial de Docker
+  curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+5- Agregamos el repositorio estable de Docker
+  echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  
+6- Volvemos a actualizar el repositorio local para que tome los cambios
+  sudo apt-get update
+  
+7- Instalamos docker
+  sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+NOTA: para que funcione docker solo se necesita el paquete docker-ce
+
+8- Para verificar que se instalo correctamente podemos ejectuar
+  docker --version
