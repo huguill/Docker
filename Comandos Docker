@@ -62,8 +62,7 @@ docker commit <contenedor origen> <nombre de la nueva imagen> #creo una imagen e
 docker build -t my_imagen . #crear una imagen llamada my_imagen a partir de un Dockerfile que se encuentra en el directorio donde estamos(.)
 docker build -t imagen:v1 . #a partir de un dockerfile en la carpeta donde me encuentro creo una imagen llamada (-t) imagen y tiene el tag v1 (generalmente el tag indica la version).
 docker image history <nombre de la imagen> #nos muestra los cambios que sufrio la imagen.
-
-DOCKER HUB
+docker search <nombre de la imagen> # Hace una busqueda en el registy oficial de docker (docker.io) que macheen con el nombre de la imagen indicado.
 docker login #solicitara usuario y clave del hub.docker.com para luego poder subir las imagenes propias.
 docker image tag image:v5 <UsuarioDockerHub/NombreImagen:tag> #editamos el nombre de nuestar imagen para poder subirla a docker hub.
 docker push <UsuarioDockerHub/NombreImagen:tag> #subimos la imagen con el formato valido.
