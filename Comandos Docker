@@ -31,6 +31,7 @@ docker kill <ID> #mata el contenedor
 docker top <ID/Nombre del contenedor> #muestra los procesos del contenedor.
 docker stats <ID/Nombre del contenedor> #muestra los recursos del contenedor.
 docker inspect <ID del contenedor/imagen> contenedor.txt #Nos brinda info de las propiedades del contenedor/imagen en formato JSON redireccionando el resultado a contenedor.txt.
+docker system df #Muestra info general sobre espacio, cantidad de imagenes, contenedores...etc.
 
 NETWORK
 docker run -d -P nginx #ejecuta un contenedor nginx en modo background y expone todos sus puertos como públicos.
